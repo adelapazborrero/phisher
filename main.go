@@ -23,10 +23,6 @@ func main() {
 		log.Fatal("Could not create table:", err)
 	}
 
-	// mailer := mail.NewMailer("abel45991690@gmail.com", []string{"", ""}, "")
-	// mailer.Send()
-
-	// b160c3f8-b18b-4695-8631-f53eefd530b9
 	campaign := model.NewCampaign("My new campaign")
 	campaigns, err := campaign.Find(db, "b160c3f8-b18b-4695-8631-f53eefd530b9")
 	if err != nil {
