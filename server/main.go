@@ -18,4 +18,8 @@ func main() {
 		log.Fatal(err)
 	}
 	defer db.Close()
+
+	server := config.InitHTTP()
+	server.Run()
+
 }

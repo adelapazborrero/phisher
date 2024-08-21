@@ -17,7 +17,8 @@ const CreateMailTable = `
 		sender TEXT NOT NULL,
 		receiver TEXT NOT NULL,
 		sent_time TIMESTAMP,
-		open_time TIMESTAMP
+		open_time TIMESTAMP,
+		clicked BOOLEAN DEFAULT FALSE
 	);
 `
 
