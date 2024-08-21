@@ -60,3 +60,24 @@ func (c *Campaign) Save(db *sql.DB) error {
 
 	return nil
 }
+
+func (c *Campaign) Update(db *sql.DB, id types.ID, title string) error {
+	campaign, err := c.Find(db, id)
+	if err != nil {
+		return err
+	}
+
+	campaign.Title = title
+	_, err = db.Exec("UPDATE campaigns SET title = $1 WHERE id = $2", campaign.Title, campaign.ID)
+	return err
+}
+
+func (c *Campaign) Delete(db *sql.DB, id types.ID) error {
+	campaign, err := c.Find(db, id)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec("DELETE FROM campaigns WHERE id = $1", campaign.ID)
+	return err
+}
