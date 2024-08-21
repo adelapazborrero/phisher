@@ -9,8 +9,8 @@ import (
 
 type Mail struct {
 	ID       types.ID
-	From     string
-	To       string
+	Sender   string
+	Receiver string
 	SentTime *time.Time
 	OpenTime *time.Time
 }
@@ -18,8 +18,8 @@ type Mail struct {
 func NewMail(from string, to string) *Mail {
 	return &Mail{
 		ID:       "",
-		From:     from,
-		To:       to,
+		Sender:   from,
+		Receiver: to,
 		SentTime: types.TimePtr(time.Now()),
 		OpenTime: nil,
 	}
@@ -28,7 +28,7 @@ func NewMail(from string, to string) *Mail {
 func (m *Mail) Find(db *sql.DB, id types.ID) (*Mail, error) {
 	var mail Mail
 	row := db.QueryRow("SELECT * FROM mails WHERE id = $1", id)
-	err := row.Scan(&mail.ID, &mail.From, &mail.To, &mail.SentTime, &mail.OpenTime)
+	err := row.Scan(&mail.ID, &mail.Sender, &mail.Receiver, &mail.SentTime, &mail.OpenTime)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (m *Mail) FindAll(db *sql.DB) (*[]Mail, error) {
 	for rows.Next() {
 		var mail Mail
 
-		err := rows.Scan(&mail.ID, &mail.From, &mail.To, &mail.SentTime, &mail.OpenTime)
+		err := rows.Scan(&mail.ID, &mail.Sender, &mail.Receiver, &mail.SentTime, &mail.OpenTime)
 		if err != nil {
 			return nil, err
 		}
@@ -60,7 +60,7 @@ func (m *Mail) Save(db *sql.DB) error {
 
 	m.ID = types.NewID()
 
-	_, err := db.Exec("INSERT INTO mails (id, from, to, sent_time, open_time) VALUES ($1, $2, $3, $4, $5)", m.ID, m.From, m.To, m.SentTime, m.OpenTime)
+	_, err := db.Exec("INSERT INTO mails (id, sender, receiver, sent_time, open_time) VALUES ($1, $2, $3, $4, $5)", m.ID, m.Sender, m.Receiver, m.SentTime, m.OpenTime)
 	if err != nil {
 		return err
 	}

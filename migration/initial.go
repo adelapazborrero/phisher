@@ -14,8 +14,8 @@ const DropCampaignTable = `
 const CreateMailTable = `
 	CREATE TABLE IF NOT EXISTS mails (
 		id TEXT PRIMARY KEY,
-		from TEXT NOT NULL,
-		to TEXT NOT NULL,
+		sender TEXT NOT NULL,
+		receiver TEXT NOT NULL,
 		sent_time TIMESTAMP,
 		open_time TIMESTAMP
 	);
