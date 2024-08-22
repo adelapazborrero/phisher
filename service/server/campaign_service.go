@@ -7,20 +7,12 @@ import (
 	"github.com/adelapazborrero/gophisher/types"
 )
 
-type ICampaignService interface {
-	Get(id types.ID) (*model.Campaign, error)
-	GetAll() (*[]model.Campaign, error)
-	Create(title string) error
-	Update(id types.ID, title string) error
-	Delete(id types.ID) error
-}
-
 type CampaignService struct {
 	db *sql.DB
 }
 
-func NewCampaignService(db *sql.DB) ICampaignService {
-	return &CampaignService{
+func NewCampaignService(db *sql.DB) CampaignService {
+	return CampaignService{
 		db: db,
 	}
 }
